@@ -1,37 +1,19 @@
-
+import LCOMX_gui
 import sys
-from PyQt6.QtWidgets import QWidget, QApplication ,QMessageBox
+from PyQt6.QtWidgets import QApplication, QMainWindow
 
 
-class Example(QWidget):
-
+class lcomx(QMainWindow):
     def __init__(self):
         super().__init__()
-
-        self.initUI()
-
-    def initUI(self):
-
-        self.resize(350, 250)
-        self.center()
-
-        self.setWindowTitle('Center')
-        self.show()
-
-    def center(self):
-
-        qr = self.frameGeometry()
-        QMessageBox.information(self,'测试',f'{qr}',QMessageBox.StandardButton.Ok)
-        cp = self.screen().availableGeometry().center()
-
-        qr.moveCenter(cp)
-        self.move(qr.topLeft())
+        ui=LCOMX_gui.Ui_LCOMX()
+        ui.setupUi(self)
 
 
 def main():
-
     app = QApplication(sys.argv)
-    ex = Example()
+    gui = lcomx()
+    gui.show()
     sys.exit(app.exec())
 
 
