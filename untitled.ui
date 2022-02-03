@@ -16,7 +16,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
     <item row="0" column="0">
-     <layout class="QVBoxLayout" name="verticalLayout_2" stretch="2,1">
+     <layout class="QVBoxLayout" name="verticalLayout_2" stretch="2,0">
       <property name="spacing">
        <number>14</number>
       </property>
@@ -214,12 +214,10 @@
            </widget>
           </item>
           <item row="6" column="1">
-           <widget class="QComboBox" name="comboBox_6">
-            <item>
-             <property name="text">
-              <string>保留</string>
-             </property>
-            </item>
+           <widget class="QRadioButton" name="radioButton">
+            <property name="text">
+             <string>打开</string>
+            </property>
            </widget>
           </item>
          </layout>
@@ -252,7 +250,7 @@
              <widget class="QTextEdit" name="textEdit_3"/>
             </item>
             <item>
-             <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,1">
+             <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,1,0">
               <item>
                <widget class="QPushButton" name="pushButton_3">
                 <property name="text">
@@ -263,7 +261,14 @@
               <item>
                <widget class="QPushButton" name="pushButton_4">
                 <property name="text">
-                 <string>清除</string>
+                 <string>清除接收</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton">
+                <property name="text">
+                 <string>清除发送</string>
                 </property>
                </widget>
               </item>

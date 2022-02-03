@@ -1,3 +1,4 @@
+from socket import timeout
 import LCOMX_gui
 import sys
 import serial
@@ -11,6 +12,9 @@ class lcomx(QMainWindow):
         self.ui=LCOMX_gui.Ui_LCOMX()
         self.ui.setupUi(self)
         get_portlist(self.ui)
+        self.paritylist=["N","O","E"]
+        self.port_change()
+        # self.ui.textEdit.setPlainText("示例")
 
         #接收数据定时器
         self.timer_get=QTimer(self)
@@ -24,13 +28,38 @@ class lcomx(QMainWindow):
 
         self.ui.pushButton_3.clicked.connect(self.send_data)#实现发送数据按钮
         self.ui.pushButton_4.clicked.connect(self.clear_data)#实现清除数据按钮
+        self.ui.pushButton.clicked.connect(self.clear_send)#实现清除发送数据
 
-    def clear_data():
+        self.ui.radioButton.clicked.connect(self.port_operate)
+
+    def port_operate(self):
+        if self.ui.radioButton.isChecked:
+            self.ser.open()
+        else:
+            self.ser.close()
+
+
+    def clear_send(self):
         pass
+
+    
+    def port_change(self):
+        portx=self.ui.comboBox.currentText()  #端口
+        bps=int(self.ui.comboBox_2.currentText()) #波特率
+        bytesize=int(self.ui.comboBox_3.currentText())
+        stopbits=int(self.ui.comboBox_4.currentText())
+        parity=self.paritylist[int(self.ui.comboBox_5.currentIndex())]
+        self.ser = serial.Serial(portx, bps, bytesize=bytesize, stopbits=stopbits, timeout=1,parity=parity)        
+
+    def clear_data(self):
+        self.ui.textEdit.clear()
 
     def send_data(self):
         # print(1)
         pass
+
+
+
 
 
     def timer_get_data(self):
