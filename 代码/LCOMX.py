@@ -1,22 +1,21 @@
 from socket import timeout
 from timeit import Timer
-import PyQt6
 
 from sqlalchemy import false, true
 import LCOMX_gui
 import sys
 import serial
 import serial.tools.list_ports
-from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox,QStatusBar
-from PyQt6.QtCore import QTimer ,QDateTime,Qt
+from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox, QStatusBar
+from PyQt6.QtCore import QTimer, QDateTime, Qt
 
 
 class lcomx(QMainWindow):
     def __init__(self):
-        self.now=QDateTime().currentDateTime()
-        self.pull=None
+        self.now = QDateTime().currentDateTime()
+        self.pull = None
         super().__init__()
-        self.ser=None
+        self.ser = None
         self.message = QMessageBox()
         self.ui = LCOMX_gui.Ui_LCOMX()
         self.ui.setupUi(self)
@@ -24,20 +23,17 @@ class lcomx(QMainWindow):
         self.get_portlist()
         # self.ui.textEdit.setPlainText("示例")
 
-        self.statusBar().showMessage(self.now.toString(Qt.DateFormat.TextDate))#显示当前时间
-        self.timer_bar=QTimer(self)
+        self.statusBar().showMessage(self.now.toString(Qt.DateFormat.TextDate))  # 显示当前时间
+        self.timer_bar = QTimer(self)
         self.timer_bar.timeout.connect(self.change_time_bar)
         self.timer_bar.start(1000)
-
-        
-
 
         # 接收数据定时器
         self.timer_get = QTimer(self)
         self.timer_get.timeout.connect(self.timer_get_data)
         self.timer_get.start(1)
 
-        #检测串口是否存在
+        # 检测串口是否存在
         self.timer_test = QTimer(self)
         self.timer_test.timeout.connect(self.test_port)
         self.timer_test.start(100)
@@ -57,8 +53,8 @@ class lcomx(QMainWindow):
         self.ui.radioButton_huiche.setChecked(True)  # 默认发送回车
         self.addhuiche = True
 
-        self.ui.pushButton_2.clicked.connect(self.get_portlist)#实现了拉取串口列表
-        #改变串口属性时发生相应变化
+        self.ui.pushButton_2.clicked.connect(self.get_portlist)  # 实现了拉取串口列表
+        # 改变串口属性时发生相应变化
         self.ui.comboBox.activated.connect(self.port_change)
         self.ui.comboBox_2.activated.connect(self.port_change)
         self.ui.comboBox_3.activated.connect(self.port_change)
@@ -66,12 +62,12 @@ class lcomx(QMainWindow):
         self.ui.comboBox_5.activated.connect(self.port_change)
 
     def change_time_bar(self):
-        self.now=QDateTime().currentDateTime()
-        self.statusBar().showMessage(self.now.toString(Qt.DateFormat.TextDate))#显示当前时间
+        self.now = QDateTime().currentDateTime()
+        self.statusBar().showMessage(self.now.toString(Qt.DateFormat.TextDate))  # 显示当前时间
 
     def test_port(self):
 
-                # 拉取窗口列表，加入到comboBox中
+        # 拉取窗口列表，加入到comboBox中
         port_list = list(serial.tools.list_ports.comports())
 
         if port_list == []:
@@ -79,11 +75,11 @@ class lcomx(QMainWindow):
             if self.ser is not None:
                 self.ser.close
             self.ui.comboBox.clear()
-            if self.pull==False:
-                self.pull=True
-                self.ser=None
-                self.message.information(self,"通知","串口已拔出")
-            
+            if self.pull == False:
+                self.pull = True
+                self.ser = None
+                self.message.information(self, "通知", "串口已拔出")
+
         else:
             pass
 
@@ -117,11 +113,12 @@ class lcomx(QMainWindow):
                 bps = int(self.ui.comboBox_2.currentText())  # 波特率
                 bytesize = int(self.ui.comboBox_4.currentText())
                 stopbits = int(self.ui.comboBox_3.currentText())
-                parity = self.paritylist[int(self.ui.comboBox_5.currentIndex())]
+                parity = self.paritylist[int(
+                    self.ui.comboBox_5.currentIndex())]
                 self.ser = serial.Serial(
                     portx, bps, bytesize=bytesize, stopbits=stopbits, timeout=5, parity=parity)
                 self.ui.radioButton.setChecked(True)
-                self.pull=False
+                self.pull = False
             else:
                 self.message.information(self, "消息", "无串口")
 
@@ -133,11 +130,11 @@ class lcomx(QMainWindow):
 
     def send_data(self):
         # print(1)
-        data=self.ui.textEdit_3.toPlainText()
-        
-        data=data.encode('gbk')
+        data = self.ui.textEdit_3.toPlainText()
+
+        data = data.encode('gbk')
         if self.addhuiche:
-            data=data+"\r\n".encode("gbk")
+            data = data+"\r\n".encode("gbk")
         self.ser.write(data)
         pass
 
@@ -146,19 +143,17 @@ class lcomx(QMainWindow):
         if self.ser is not None:
             if self.ser.isOpen():
                 try:
-                    num = self.ser.inWaiting()#获取输入缓冲区的剩余字节数
+                    num = self.ser.inWaiting()  # 获取输入缓冲区的剩余字节数
                 except:
                     self.port_close()
                     return None
                 if num > 0:
                     data = self.ser.read(num)
                     try:
-                        data=data.decode("gbk")
+                        data = data.decode("gbk")
                     except UnicodeDecodeError:
-                        data="解码失败\r\n"
+                        data = "解码失败\r\n"
                     self.ui.textEdit.insertPlainText(data)
-            
-
 
     def port_close(self):
         if self.ser:
@@ -172,7 +167,6 @@ class lcomx(QMainWindow):
                 self.ser.open()
                 self.ui.radioButton.setChecked(True)
 
-
     def timer_send_data(self):
         # 发送数据处理函数
         pass
@@ -183,7 +177,6 @@ class lcomx(QMainWindow):
         if self.ser:
             if self.ser.isOpen():
                 self.ser.close()
-
 
         port_list = list(serial.tools.list_ports.comports())
 
