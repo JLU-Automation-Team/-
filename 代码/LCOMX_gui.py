@@ -101,7 +101,10 @@ class Ui_LCOMX(object):
         self.label_6.setFont(font)
         self.label_6.setObjectName("label_6")
         self.gridLayout.addWidget(self.label_6, 6, 0, 1, 1)
-        self.radioButton = QtWidgets.QRadioButton(self.centralwidget)
+        self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_2.setObjectName("pushButton_2")
+        self.gridLayout.addWidget(self.pushButton_2, 0, 1, 1, 1)
+        self.radioButton = QtWidgets.QCheckBox(self.centralwidget)
         self.radioButton.setObjectName("radioButton")
         self.gridLayout.addWidget(self.radioButton, 6, 1, 1, 1)
         self.gridLayout.setRowMinimumHeight(1, 50)
@@ -126,6 +129,7 @@ class Ui_LCOMX(object):
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.tab_3)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.radioButton_huiche = QtWidgets.QRadioButton(self.tab_3)
+        self.radioButton_huiche.setChecked(False)
         self.radioButton_huiche.setObjectName("radioButton_huiche")
         self.horizontalLayout.addWidget(self.radioButton_huiche)
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
@@ -205,8 +209,14 @@ class Ui_LCOMX(object):
         self.comboBox_5.setItemText(1, _translate("LCOMX", "奇校验"))
         self.comboBox_5.setItemText(2, _translate("LCOMX", "偶校验"))
         self.label_6.setText(_translate("LCOMX", "串口操作"))
+        self.pushButton_2.setText(_translate("LCOMX", "搜索"))
         self.radioButton.setText(_translate("LCOMX", "打开"))
         self.radioButton_huiche.setText(_translate("LCOMX", "自动添加回车"))
+        self.textEdit_3.setHtml(_translate("LCOMX", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'SimSun\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.pushButton_3.setText(_translate("LCOMX", "发送"))
         self.pushButton_4.setText(_translate("LCOMX", "清除接收"))
         self.pushButton.setText(_translate("LCOMX", "清除发送"))
